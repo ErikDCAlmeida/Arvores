@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 package Arvores;
-import InterfaceTrees.BinaryTree;
 import java.util.ArrayList;
 import java.util.Iterator;
 import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
+import InterfaceTrees.IArvoreBinaria;
 /**
  *
  * @author EriikD
  */
-public class ArvoreBinaria<T> implements BinaryTree<T>{
+public class ArvoreBinaria<T> implements IArvoreBinaria<T>{
 
     private ArrayList<No> arrayNos;
     private No raizDaArvore;

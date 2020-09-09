@@ -13,7 +13,7 @@ import Exceptions.PossuiFilhoNaEsquerda;
  *
  * @author EriikD
  */
-public interface BinaryTree<T> extends Iterable<T> {
+public interface IArvoreBinaria<T> extends Iterable<T> {
     public abstract void adicionarNo(T nome, No noPai, char posFilho) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda;
     public abstract boolean consultarNo(String nome);
     public abstract int grauNo(T elemento);
