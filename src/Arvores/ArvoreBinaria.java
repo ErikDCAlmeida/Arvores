@@ -41,7 +41,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T>{
                     noPai.setFilhoEsquerdo(noAux);
                 }else if (posicao == 'D' || posicao == 'd') {
                     noPai.setFilhoDireito(noAux);
+                }else{
+                    System.out.println("Não foi possível adicionar esse filho!");
                 }
+                this.arrayNos.add(noAux);
             }
         }
     }
