@@ -5,13 +5,17 @@
  */
 package InterfaceTrees;
 
+import Arvores.No;
+import Exceptions.PossuiFilhoNaDireita;
+import Exceptions.PossuiFilhoNaEsquerda;
+
 /**
  *
  * @author EriikD
  */
 public interface BinaryTree<T> extends Iterable<T> {
-    public abstract void adicionarNo(T elemento);
-    public abstract boolean consultarNo(T elemento);
+    public abstract void adicionarNo(T nome, No noPai, char posFilho) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda;
+    public abstract boolean consultarNo(String nome);
     public abstract int grauNo(T elemento);
     public abstract int profundidadeNo(T elemento);
     public abstract int alturaNo(T elemento);

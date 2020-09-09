@@ -5,22 +5,49 @@
  */
 package Arvores;
 import InterfaceTrees.BinaryTree;
+import java.util.ArrayList;
 import java.util.Iterator;
+import Exceptions.PossuiFilhoNaDireita;
+import Exceptions.PossuiFilhoNaEsquerda;
 /**
  *
  * @author EriikD
  */
 public class ArvoreBinaria<T> implements BinaryTree<T>{
 
+    private ArrayList<No> arrayNos;
+    private No raizDaArvore;
+
+    public ArvoreBinaria() {
+        this.arrayNos = new ArrayList<>();
+        this.raizDaArvore = null;
+    }
+    
     @Override
-    public void adicionarNo(T elemento) {
-        /*Método responsável para adicionar um nó na árvore.*/
-        
-        
+    public void adicionarNo(T nome, No noPai, char posicao) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda{
+        No noAux = new No(nome, noPai);
+        if (noAux.possuiPai() == false) {
+            this.raizDaArvore = noAux;
+            this.arrayNos.add(noAux);
+        }else{
+            if ( (posicao == 'E' || posicao == 'e') && noPai.possuiFilhoEsquerdo() ) {
+                throw new PossuiFilhoNaEsquerda();
+            }
+            else if ( (posicao == 'D' || posicao == 'd') && noPai.possuiFilhoDireito()) {
+                throw new PossuiFilhoNaDireita();
+            }
+            else{
+                if (posicao == 'E' || posicao == 'e') {
+                    noPai.setFilhoEsquerdo(noAux);
+                }else if (posicao == 'D' || posicao == 'd') {
+                    noPai.setFilhoDireito(noAux);
+                }
+            }
+        }
     }
 
     @Override
-    public boolean consultarNo(T elemento) {
+    public boolean consultarNo(String nome) {
         /*Método responsável para consultar um elemento dentro da árvore. Verificar se ele existe.*/
         
         
@@ -100,6 +127,14 @@ public class ArvoreBinaria<T> implements BinaryTree<T>{
         
         
         return null;
+    }
+
+    public ArrayList<No> getArrayNos() {
+        return arrayNos;
+    }
+
+    public No getRaizDaArvore() {
+        return raizDaArvore;
     }
     
 }

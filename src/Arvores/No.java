@@ -5,25 +5,27 @@
  */
 package Arvores;
 
+import java.util.Objects;
+
 /**
  *
  * @author EriikD
  */
-public class No {
+public class No<T> {
     
-    private String nome;
+    private T nome;
     private No filhoEsquerdo;
     private No filhoDireito;
     private No pai;
 
-    public No(String nome, No pai) {
+    public No(T nome, No pai) {
         this.nome = nome;
         this.pai = pai;
         this.filhoDireito = null;
         this.filhoEsquerdo = null;
     }
 
-    public No(String nome) {
+    public No(T nome) {
         this(nome, null);
     }
     
@@ -35,11 +37,15 @@ public class No {
         return this.filhoDireito != null;
     }
     
-    public String getNome() {
+    public boolean possuiPai(){
+        return this.pai != null;
+    }
+    
+    public T getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(T nome) {
         this.nome = nome;
     }
 
@@ -67,6 +73,22 @@ public class No {
         this.pai = pai;
     }    
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        No<T> other = (No<T>) obj;
+        
+        return this.nome == other.nome;
+    }
+
+    
+    
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
