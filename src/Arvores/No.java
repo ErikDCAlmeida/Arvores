@@ -27,15 +27,12 @@ public class No {
         this(nome, null);
     }
     
-    
     public boolean possuiFilhoEsquerdo(){
-        
-        return false;
+        return this.filhoEsquerdo != null;
     }
     
     public boolean possuiFilhoDireito(){
-        
-        return false;
+        return this.filhoDireito != null;
     }
     
     public String getNome() {
@@ -69,5 +66,13 @@ public class No {
     public void setPai(No pai) {
         this.pai = pai;
     }    
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append("Nome: ").append(this.nome);
+        return string.toString();
+    }
+    
     
 }

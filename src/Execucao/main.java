@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Execucao;
-
 /**
  *
  * @author EriikD
@@ -15,7 +14,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+                
     }
     
 }
