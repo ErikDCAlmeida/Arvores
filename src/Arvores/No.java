@@ -5,8 +5,6 @@
  */
 package Arvores;
 
-import java.util.Objects;
-
 /**
  *
  * @author EriikD
@@ -14,11 +12,11 @@ import java.util.Objects;
 public class No<T> {
     
     private T nome;
-    private No filhoEsquerdo;
-    private No filhoDireito;
-    private No pai;
+    private No<T> filhoEsquerdo;
+    private No<T> filhoDireito;
+    private No<T> pai;
 
-    public No(T nome, No pai) {
+    public No(T nome, No<T> pai) {
         this.nome = nome;
         this.pai = pai;
         this.filhoDireito = null;
@@ -45,31 +43,27 @@ public class No<T> {
         return nome;
     }
 
-    public void setNome(T nome) {
-        this.nome = nome;
-    }
-
-    public No getFilhoEsquerdo() {
+    public No<T> getFilhoEsquerdo() {
         return filhoEsquerdo;
     }
 
-    public void setFilhoEsquerdo(No filhoEsquerdo) {
+    public void setFilhoEsquerdo(No<T> filhoEsquerdo) {
         this.filhoEsquerdo = filhoEsquerdo;
     }
 
-    public No getFilhoDireito() {
+    public No<T> getFilhoDireito() {
         return filhoDireito;
     }
 
-    public void setFilhoDireito(No filhoDireito) {
+    public void setFilhoDireito(No<T> filhoDireito) {
         this.filhoDireito = filhoDireito;
     }
 
-    public No getPai() {
+    public No<T> getPai() {
         return pai;
     }
 
-    public void setPai(No pai) {
+    public void setPai(No<T> pai) {
         this.pai = pai;
     }    
 
@@ -87,14 +81,11 @@ public class No<T> {
         return this.nome == other.nome;
     }
 
-    
-    
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
         string.append("Nome: ").append(this.nome);
         return string.toString();
-    }
-    
+    } 
     
 }
