@@ -29,6 +29,9 @@ public class main {
         tree.adicionarNo(5, 4, 'd');
         
         System.out.println(tree.consultarExistenciaNo(4));
+        System.out.println(tree.grauNo(6));
+        
+        
         
     }
     
