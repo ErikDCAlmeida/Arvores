@@ -33,7 +33,7 @@ public class main {
         System.out.println(tree.grauNo(3));
         System.out.println(tree.profundidadeNo(3));
         System.out.println(tree.alturaNo(0));
-             
+        System.out.println(tree.nivelNo(6));
         
     }
     

@@ -137,8 +137,25 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     @Override
     public int nivelNo(T elemento) throws NoNaoExiste {
         /*Método responsável por saber a nível de um determinado nó.*/
-
-        return 0;
+        int nivel = 0;
+        
+        No<T> noAux = this.pegarNo(elemento, raizDaArvore);
+        
+        if (noAux == null) {
+            throw new NoNaoExiste(elemento.toString());
+        }else if (noAux.equals(this.raizDaArvore)){
+            return nivel;
+        }else{
+            for (int i = 0; i < 1;) {
+                if (noAux.possuiPai() == true) {
+                    nivel += 1;
+                    noAux = noAux.getPai();
+                }else{
+                    break;
+                }
+            }
+            return nivel + 1;
+        }
     }
 
     @Override
@@ -168,13 +185,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     public void inverterSubArvores() {
         /*Método que permite a troca de sub-árvores de uma árvore. Imprimindo a árvore original e a árvore atualizada.*/
 
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        /*Método para fazer o Iterator para percorrer a árvore.*/
-
-        return null;
     }
 
     public No<T> getRaizDaArvore() {

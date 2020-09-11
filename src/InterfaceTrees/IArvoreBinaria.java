@@ -5,7 +5,6 @@
  */
 package InterfaceTrees;
 
-import Arvores.No;
 import Exceptions.NoNaoExiste;
 import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
@@ -14,7 +13,7 @@ import Exceptions.PossuiFilhoNaEsquerda;
  *
  * @author EriikD
  */
-public interface IArvoreBinaria<T> extends Iterable<T> {
+public interface IArvoreBinaria<T> {
     public abstract void adicionarNo(T nome, T elementoNoPai, char posFilho) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda;
     public abstract boolean consultarExistenciaNo(T elemento);
     public abstract int grauNo(T elemento) throws NoNaoExiste;
