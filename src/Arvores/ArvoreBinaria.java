@@ -160,8 +160,29 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     @Override
     public int quantidadeNoArvore() {
         /*Método recursivo para saber a quantidade de nós na árvore.*/
-
-        return 0;
+        
+        if (this.raizDaArvore.possuiFilhoDireito() == false && 
+                this.raizDaArvore.possuiFilhoEsquerdo() == false) {
+            return 0;
+        }else{
+            return contAux(this.raizDaArvore);
+        }
+    }
+    
+    private int contAux(No<T> raiz){
+        int contador = 0;
+        
+        if (raiz != null) {
+            contador += 1;
+            if (raiz.possuiFilhoDireito() == true) {
+                contador += this.contAux(raiz.getFilhoDireito());
+            }
+            
+            if (raiz.possuiFilhoEsquerdo() == true) {
+                contador += this.contAux(raiz.getFilhoEsquerdo());
+            }
+        }
+        return contador;
     }
 
     @Override

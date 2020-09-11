@@ -29,11 +29,12 @@ public class main {
         tree.adicionarNo(6, 3, 'd');
         
         
-        System.out.println(tree.consultarExistenciaNo(4));
-        System.out.println(tree.grauNo(3));
-        System.out.println(tree.profundidadeNo(3));
-        System.out.println(tree.alturaNo(0));
-        System.out.println(tree.nivelNo(4));
+        System.out.println("Consular existência: " + tree.consultarExistenciaNo(4));
+        System.out.println("Grau de um nó: " + tree.grauNo(3));
+        System.out.println("Profundidade de um nó: " + tree.profundidadeNo(3));
+        System.out.println("Altura de um nó: " + tree.alturaNo(0));
+        System.out.println("Nível de um nó: " + tree.nivelNo(4));
+        System.out.println("Quantidade de nós na árvore: " + tree.quantidadeNoArvore());
         
     }
     
