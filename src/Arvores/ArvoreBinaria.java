@@ -5,7 +5,6 @@
  */
 package Arvores;
 
-import java.util.Iterator;
 import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
 import Exceptions.NoNaoExiste;
@@ -144,7 +143,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         if (noAux == null) {
             throw new NoNaoExiste(elemento.toString());
         }else if (noAux.equals(this.raizDaArvore)){
-            return nivel;
+            return nivel + 1;
         }else{
             for (int i = 0; i < 1;) {
                 if (noAux.possuiPai() == true) {
