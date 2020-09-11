@@ -47,28 +47,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
-    private No<T> pegarNo(T elemento, No<T> noRaiz) {
-        /*Método private que retorna um nó.*/
-        No<T> filhoEsquerdo;
-        No<T> filhoDireito;
-        if (noRaiz != null) {
-            if (noRaiz.getElemento().equals(elemento)) {
-                return noRaiz;
-            }
-
-            filhoEsquerdo = pegarNo(elemento, noRaiz.getFilhoEsquerdo());
-            if (filhoEsquerdo != null) {
-                return filhoEsquerdo;
-            }
-
-            filhoDireito = pegarNo(elemento, noRaiz.getFilhoDireito());
-            if (filhoDireito != null) {
-                return filhoDireito;
-            }
-        }
-        return null;
-    }
-
     @Override
     public boolean consultarExistenciaNo(T elemento) {
         /*Método responsável para consultar um elemento dentro da árvore. Verificar se ele existe.*/
@@ -87,16 +65,16 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     @Override
-    public int grauNo(T elemento) throws NoNaoExiste{
+    public int grauNo(T elemento) throws NoNaoExiste {
         /*Método responsável para saber o grau de um determinado nó.*/
         int contadorGrau = 0;
 
-        No noAux = this.pegarNo(elemento, raizDaArvore);
+        No<T> noAux = this.pegarNo(elemento, raizDaArvore);
 
         if (noAux == null) {
             throw new NoNaoExiste(elemento.toString());
         }
-        
+
         if (noAux.possuiFilhoDireito() == true) {
             contadorGrau += 1;
         }
@@ -109,21 +87,40 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     @Override
-    public int profundidadeNo(T elemento) {
+    public int profundidadeNo(T elemento) throws NoNaoExiste {
         /*Método responsável para saber a profundidade de um determinado nó.*/
+        int profundidade = 0;
 
+        No<T> noAux = this.pegarNo(elemento, raizDaArvore);
+
+        if (noAux == null) {
+            throw new NoNaoExiste(elemento.toString());
+        } else {
+            if (noAux.equals(this.raizDaArvore)) {
+                return profundidade;
+            } else {
+                for (int i = 0; i < 1;) {
+                    if (noAux.possuiPai() == true) {
+                        profundidade += 1;
+                        noAux = noAux.getPai();
+                    }else{
+                        return profundidade;
+                    }
+                }
+            }
+        }
         return 0;
     }
 
     @Override
-    public int alturaNo(T elemento) {
+    public int alturaNo(T elemento) throws NoNaoExiste {
         /*Método responsável por saber a altura de um determinado nó.*/
 
         return 0;
     }
 
     @Override
-    public int nivelNo(T elemento) {
+    public int nivelNo(T elemento) throws NoNaoExiste {
         /*Método responsável por saber a nível de um determinado nó.*/
 
         return 0;
@@ -168,9 +165,27 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     public No<T> getRaizDaArvore() {
         return raizDaArvore;
     }
+    
+    //=============================Private Methods==============================
+    private No<T> pegarNo(T elemento, No<T> noRaiz) {
+        /*Método private que retorna um nó.*/
+        No<T> filhoEsquerdo;
+        No<T> filhoDireito;
+        if (noRaiz != null) {
+            if (noRaiz.getElemento().equals(elemento)) {
+                return noRaiz;
+            }
 
-    private String String(T elemento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            filhoEsquerdo = pegarNo(elemento, noRaiz.getFilhoEsquerdo());
+            if (filhoEsquerdo != null) {
+                return filhoEsquerdo;
+            }
+
+            filhoDireito = pegarNo(elemento, noRaiz.getFilhoDireito());
+            if (filhoDireito != null) {
+                return filhoDireito;
+            }
+        }
+        return null;
     }
-
 }

@@ -6,7 +6,6 @@
 package Execucao;
 
 import Arvores.ArvoreBinaria;
-import Arvores.No;
 
 /**
  *
@@ -29,9 +28,9 @@ public class main {
         tree.adicionarNo(5, 4, 'd');
         
         System.out.println(tree.consultarExistenciaNo(4));
-        System.out.println(tree.grauNo(6));
-        
-        
+        System.out.println(tree.grauNo(5));
+        System.out.println(tree.profundidadeNo(5));
+             
         
     }
     
