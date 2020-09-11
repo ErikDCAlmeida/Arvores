@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Arvores;
-import java.util.ArrayList;
 import java.util.Iterator;
 import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
@@ -15,25 +14,24 @@ import InterfaceTrees.IArvoreBinaria;
  */
 public class ArvoreBinaria<T> implements IArvoreBinaria<T>{
 
-    private ArrayList<No> arrayNos;
-    private No raizDaArvore;
+    private No<T> raizDaArvore;
 
     public ArvoreBinaria() {
-        this.arrayNos = new ArrayList<>();
         this.raizDaArvore = null;
     }
     
     @Override
-    public void adicionarNo(T nome, No noPai, char posicao) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda{
-        No noAux = new No(nome, noPai);
-        if (noAux.possuiPai() == false) {
-            this.raizDaArvore = noAux;
-            this.arrayNos.add(noAux);
+    public void adicionarNo(T nome, T elementoNoPai, char posicao) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda{
+        /*Método responsável por adicionar um nó na árvore.*/
+        if (this.raizDaArvore == null) {
+            this.raizDaArvore = new No<>(nome, null);
         }else{
-            if ( (posicao == 'E' || posicao == 'e') && noPai.possuiFilhoEsquerdo() ) {
+            No<T> noPai = this.pegarNo(elementoNoPai, this.raizDaArvore);
+            No<T> noAux = new No<>(nome, noPai);
+            if ( posicao == 'e' && noPai.possuiFilhoEsquerdo() == true) {
                 throw new PossuiFilhoNaEsquerda();
             }
-            else if ( (posicao == 'D' || posicao == 'd') && noPai.possuiFilhoDireito()) {
+            else if ( posicao == 'd' && noPai.possuiFilhoDireito() == true) {
                 throw new PossuiFilhoNaDireita();
             }
             else{
@@ -44,17 +42,51 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T>{
                 }else{
                     System.out.println("Não foi possível adicionar esse filho!");
                 }
-                this.arrayNos.add(noAux);
             }
         }
     }
 
+    private No<T> pegarNo(T elemento, No<T> noRaiz){
+        /*Método private que retorna um nó.*/
+        No<T> filhoEsquerdo;
+        No<T> filhoDireito;
+        if (noRaiz != null) {
+            if (noRaiz.getElemento() == elemento) {
+                return noRaiz;
+            }
+            
+            filhoEsquerdo = pegarNo(elemento, noRaiz.getFilhoEsquerdo());
+            if (filhoEsquerdo != null) {
+                return filhoEsquerdo;
+            }
+            
+            filhoDireito = pegarNo(elemento, noRaiz.getFilhoDireito());
+            if (filhoDireito != null) {
+                return filhoDireito;
+            }
+        }
+        return null;
+    }
+    
     @Override
-    public boolean consultarNo(String nome) {
+    public boolean consultarExistenciaNo(T elemento) {
         /*Método responsável para consultar um elemento dentro da árvore. Verificar se ele existe.*/
-        
-        
-        return false;
+        if (this.raizDaArvore == null) {
+            return false;
+        }else{
+            if (this.raizDaArvore.getElemento().equals(elemento)) {
+                return true;
+            }else{
+                No<T> raizAux = this.raizDaArvore;
+                No<T> filhoAux = this.pegarNo(elemento, raizAux);
+                
+                if (filhoAux != null) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
     }
 
     @Override
@@ -132,11 +164,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T>{
         return null;
     }
 
-    public ArrayList<No> getArrayNos() {
-        return arrayNos;
-    }
-
-    public No getRaizDaArvore() {
+    public No<T> getRaizDaArvore() {
         return raizDaArvore;
     }
     

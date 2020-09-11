@@ -11,20 +11,20 @@ package Arvores;
  */
 public class No<T> {
     
-    private T nome;
+    private T elemento;
     private No<T> filhoEsquerdo;
     private No<T> filhoDireito;
     private No<T> pai;
-
-    public No(T nome, No<T> pai) {
-        this.nome = nome;
+    
+    public No(T elemento, No<T> pai) {
+        this.elemento = elemento;
         this.pai = pai;
         this.filhoDireito = null;
         this.filhoEsquerdo = null;
     }
 
-    public No(T nome) {
-        this(nome, null);
+    public No(T elemento) {
+        this(elemento, null);
     }
     
     public boolean possuiFilhoEsquerdo(){
@@ -39,8 +39,8 @@ public class No<T> {
         return this.pai != null;
     }
     
-    public T getNome() {
-        return nome;
+    public T getElemento() {
+        return elemento;
     }
 
     public No<T> getFilhoEsquerdo() {
@@ -78,13 +78,20 @@ public class No<T> {
         
         No<T> other = (No<T>) obj;
         
-        return this.nome == other.nome;
+        return this.elemento == other.elemento;
     }
 
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        string.append("Nome: ").append(this.nome);
+        string.append("Nome: ").append(this.elemento);
+        if (this.filhoEsquerdo != null) {
+            string.append("\nFilho esquerdo: ").append(this.filhoEsquerdo);
+        }
+        if (this.filhoDireito != null) {
+            string.append("\nFilho direito: ").append(this.filhoDireito);
+        }
+        string.append("\n");
         return string.toString();
     } 
     

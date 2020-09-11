@@ -14,8 +14,8 @@ import Exceptions.PossuiFilhoNaEsquerda;
  * @author EriikD
  */
 public interface IArvoreBinaria<T> extends Iterable<T> {
-    public abstract void adicionarNo(T nome, No noPai, char posFilho) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda;
-    public abstract boolean consultarNo(String nome);
+    public abstract void adicionarNo(T nome, T elementoNoPai, char posFilho) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda;
+    public abstract boolean consultarExistenciaNo(T elemento);
     public abstract int grauNo(T elemento);
     public abstract int profundidadeNo(T elemento);
     public abstract int alturaNo(T elemento);
