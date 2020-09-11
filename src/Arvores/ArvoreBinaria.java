@@ -103,7 +103,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
                     if (noAux.possuiPai() == true) {
                         profundidade += 1;
                         noAux = noAux.getPai();
-                    }else{
+                    } else {
                         return profundidade;
                     }
                 }
@@ -115,8 +115,23 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     @Override
     public int alturaNo(T elemento) throws NoNaoExiste {
         /*Método responsável por saber a altura de um determinado nó.*/
+        int altura = 0;
 
-        return 0;
+        No<T> noAux = this.pegarNo(elemento, raizDaArvore);
+
+        if (noAux == null) {
+            throw new NoNaoExiste(elemento.toString());
+        } else {
+            if (noAux.equals(this.raizDaArvore)) {
+                if (noAux.possuiFilhoDireito() == false && noAux.possuiFilhoEsquerdo() == false) {
+                    return altura;
+                } else {
+                    return this.pegarAltura(noAux);
+                }
+            } else {
+                return this.pegarAltura(noAux);
+            }
+        }
     }
 
     @Override
@@ -165,7 +180,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     public No<T> getRaizDaArvore() {
         return raizDaArvore;
     }
-    
+
     //=============================Private Methods==============================
     private No<T> pegarNo(T elemento, No<T> noRaiz) {
         /*Método private que retorna um nó.*/
@@ -187,5 +202,27 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             }
         }
         return null;
+    }
+
+    private int pegarAltura(No<T> raiz) {
+        int alturaRaizEsquerda = 0;
+        int alturaRaizDireita = 0;
+
+        if (raiz.possuiFilhoDireito() == true) {
+            alturaRaizEsquerda = this.pegarAltura(raiz.getFilhoDireito());
+            alturaRaizEsquerda += 1;
+        }
+
+        if (raiz.possuiFilhoEsquerdo() == true) {
+            alturaRaizDireita = this.pegarAltura(raiz.getFilhoEsquerdo());
+            alturaRaizDireita += 1;
+        }
+
+        if (alturaRaizDireita > alturaRaizEsquerda) {
+            return alturaRaizDireita;
+        } else if (alturaRaizDireita < alturaRaizEsquerda) {
+            return alturaRaizEsquerda;
+        }
+        return 0;
     }
 }

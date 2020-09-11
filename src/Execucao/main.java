@@ -26,10 +26,13 @@ public class main {
         tree.adicionarNo(3, 1, 'd');
         tree.adicionarNo(4, 2, 'e');
         tree.adicionarNo(5, 4, 'd');
+        tree.adicionarNo(6, 3, 'd');
+        
         
         System.out.println(tree.consultarExistenciaNo(4));
-        System.out.println(tree.grauNo(5));
-        System.out.println(tree.profundidadeNo(5));
+        System.out.println(tree.grauNo(3));
+        System.out.println(tree.profundidadeNo(3));
+        System.out.println(tree.alturaNo(0));
              
         
     }
