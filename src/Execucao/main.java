@@ -35,6 +35,7 @@ public class main {
         System.out.println("Altura de um nó: " + tree.alturaNo(0));
         System.out.println("Nível de um nó: " + tree.nivelNo(4));
         System.out.println("Quantidade de nós na árvore: " + tree.quantidadeNoArvore());
+        System.out.println("Ordens de navegação: " + tree.navegarPelaArvore());
         
     }
     

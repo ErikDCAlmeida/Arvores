@@ -22,6 +22,6 @@ public interface IArvoreBinaria<T> {
     public abstract int nivelNo(T elemento) throws NoNaoExiste;
     public abstract int quantidadeNoArvore();
     public abstract boolean removerNo(T elemento);
-    public abstract void navegarPelaArvore();
+    public abstract StringBuilder navegarPelaArvore() throws NoNaoExiste;
     public abstract void inverterSubArvores();
 }   

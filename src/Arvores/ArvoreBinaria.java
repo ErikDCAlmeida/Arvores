@@ -9,6 +9,8 @@ import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
 import Exceptions.NoNaoExiste;
 import InterfaceTrees.IArvoreBinaria;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -137,19 +139,19 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     public int nivelNo(T elemento) throws NoNaoExiste {
         /*Método responsável por saber a nível de um determinado nó.*/
         int nivel = 0;
-        
+
         No<T> noAux = this.pegarNo(elemento, raizDaArvore);
-        
+
         if (noAux == null) {
             throw new NoNaoExiste(elemento.toString());
-        }else if (noAux.equals(this.raizDaArvore)){
+        } else if (noAux.equals(this.raizDaArvore)) {
             return nivel + 1;
-        }else{
+        } else {
             for (int i = 0; i < 1;) {
                 if (noAux.possuiPai() == true) {
                     nivel += 1;
                     noAux = noAux.getPai();
-                }else{
+                } else {
                     break;
                 }
             }
@@ -160,29 +162,12 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     @Override
     public int quantidadeNoArvore() {
         /*Método recursivo para saber a quantidade de nós na árvore.*/
-        
-        if (this.raizDaArvore.possuiFilhoDireito() == false && 
-                this.raizDaArvore.possuiFilhoEsquerdo() == false) {
+        if (this.raizDaArvore.possuiFilhoDireito() == false
+                && this.raizDaArvore.possuiFilhoEsquerdo() == false) {
             return 0;
-        }else{
+        } else {
             return contAux(this.raizDaArvore);
         }
-    }
-    
-    private int contAux(No<T> raiz){
-        int contador = 0;
-        
-        if (raiz != null) {
-            contador += 1;
-            if (raiz.possuiFilhoDireito() == true) {
-                contador += this.contAux(raiz.getFilhoDireito());
-            }
-            
-            if (raiz.possuiFilhoEsquerdo() == true) {
-                contador += this.contAux(raiz.getFilhoEsquerdo());
-            }
-        }
-        return contador;
     }
 
     @Override
@@ -196,10 +181,29 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     @Override
-    public void navegarPelaArvore() {
+    public StringBuilder navegarPelaArvore() throws NoNaoExiste {
         /*Método que percorre a árvore baseado no LRN, LNR, NLR.*/
-
-    }
+        StringBuilder string = new StringBuilder();
+        StringBuilder stringLRN = new StringBuilder();
+        StringBuilder stringLNR = new StringBuilder();
+        StringBuilder stringNLR = new StringBuilder();
+        stringLRN.append("\nLRN: ");
+        stringLNR.append("\nLNR: ");
+        stringNLR.append("\nNLR: ");
+        if (this.raizDaArvore != null) {
+            int filhosRaiz;
+            filhosRaiz = this.grauNo(this.raizDaArvore.getElemento());
+            if (filhosRaiz > 0) {
+                stringLRN.append(this.LRN(this.raizDaArvore));
+                stringLNR.append(this.LNR(this.raizDaArvore));
+                stringNLR.append(this.NLR(this.raizDaArvore));
+            }
+        }else{
+            throw new NoNaoExiste(this.raizDaArvore.getElemento().toString());
+        }
+        string.append(stringLRN).append(stringLNR).append(stringNLR);
+        return string;
+    }    
 
     @Override
     public void inverterSubArvores() {
@@ -212,8 +216,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     //=============================Private Methods==============================
+    //==========================================================================
     private No<T> pegarNo(T elemento, No<T> noRaiz) {
-        /*Método private que retorna um nó.*/
+        /*Método private que retorna um nó.
+        Necessário passar o elemento do nó desejado e a raiz atual da árvore.*/
         No<T> filhoEsquerdo;
         No<T> filhoDireito;
         if (noRaiz != null) {
@@ -235,6 +241,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     private int pegarAltura(No<T> raiz) {
+        /*Método que permite pegar a altura de um nó.*/
         int alturaRaizEsquerda = 0;
         int alturaRaizDireita = 0;
 
@@ -254,5 +261,69 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             return alturaRaizEsquerda;
         }
         return 0;
+    }
+
+    private int contAux(No<T> raiz) {
+        /*Método auxiliar para retornar a quantidade de nós de uma árvore.*/
+        int contador = 0;
+        if (raiz != null) {
+            contador += 1;
+            if (raiz.possuiFilhoDireito() == true) {
+                contador += this.contAux(raiz.getFilhoDireito());
+            }
+
+            if (raiz.possuiFilhoEsquerdo() == true) {
+                contador += this.contAux(raiz.getFilhoEsquerdo());
+            }
+        }
+        return contador;
+    }
+    
+    private StringBuilder LRN(No<T> raizAtual){
+        /*Método que faz a busca dos nós seguindo a ordem LRN e 
+        retornando um StringBuilder contendo os nós nessa ordem.*/
+        StringBuilder string = new StringBuilder();
+        if (raizAtual != null) {
+            if (raizAtual.possuiFilhoEsquerdo() == true) {
+                string.append(this.LRN(raizAtual.getFilhoEsquerdo()));
+            }
+            if (raizAtual.possuiFilhoDireito() == true) {
+                string.append(this.LRN(raizAtual.getFilhoDireito()));
+            }
+            string.append(raizAtual.getElemento()).append(" ");
+        }
+        return string;
+    }
+    
+    private StringBuilder LNR(No<T> raizAtual){
+        /*Método que faz a busca dos nós seguindo a ordem LNR e 
+        retornando um StringBuilder contendo os nós nessa ordem.*/
+        StringBuilder string = new StringBuilder();
+        if (raizAtual != null) {
+            if (raizAtual.possuiFilhoEsquerdo() == true) {
+                string.append(this.LNR(raizAtual.getFilhoEsquerdo()));
+            }
+            string.append(raizAtual.getElemento()).append(" ");
+            if (raizAtual.possuiFilhoDireito() == true) {
+                string.append(this.LNR(raizAtual.getFilhoDireito()));
+            }
+        }
+        return string;
+    }
+    
+    private StringBuilder NLR(No<T> raizAtual){
+        /*Método que faz a busca dos nós seguindo a ordem NLR e 
+        retornando um StringBuilder contendo os nós nessa ordem.*/
+        StringBuilder string = new StringBuilder();
+        if (raizAtual != null) {
+            string.append(raizAtual.getElemento()).append(" ");
+            if (raizAtual.possuiFilhoEsquerdo() == true) {
+                string.append(this.NLR(raizAtual.getFilhoEsquerdo()));
+            }
+            if (raizAtual.possuiFilhoDireito() == true) {
+                string.append(this.NLR(raizAtual.getFilhoDireito()));
+            }
+        }
+        return string;
     }
 }
