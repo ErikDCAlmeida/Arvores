@@ -27,6 +27,17 @@ public class No<T> {
         this(elemento, null);
     }
     
+    public int qntDeFilhosNo(){
+        int cont = 0;
+        if (this.filhoDireito != null) {
+            cont++;
+        }
+        if (this.filhoEsquerdo != null) {
+            cont++;
+        }
+        return cont;
+    }
+    
     public boolean possuiFilhoEsquerdo(){
         return this.filhoEsquerdo != null;
     }

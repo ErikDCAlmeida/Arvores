@@ -16,8 +16,8 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception{
-        
+    public static void main(String[] args) throws Exception {
+
         ArvoreBinaria tree = new ArvoreBinaria();
         
         tree.adicionarNo(0, null, 'e');
@@ -28,7 +28,6 @@ public class main {
         tree.adicionarNo(5, 4, 'd');
         tree.adicionarNo(6, 3, 'd');
         
-        
         System.out.println("Consular existência: " + tree.consultarExistenciaNo(4));
         System.out.println("Grau de um nó: " + tree.grauNo(3));
         System.out.println("Profundidade de um nó: " + tree.profundidadeNo(3));
@@ -36,7 +35,10 @@ public class main {
         System.out.println("Nível de um nó: " + tree.nivelNo(4));
         System.out.println("Quantidade de nós na árvore: " + tree.quantidadeNoArvore());
         System.out.println("Ordens de navegação: " + tree.navegarPelaArvore());
+        System.out.println("Removendo nó..." + tree.removerNo(0));
+        System.out.println("Quantidade de nós na árvore: " + tree.quantidadeNoArvore());
+        System.out.println("Ordens de navegação: " + tree.navegarPelaArvore());
         
     }
-    
+
 }

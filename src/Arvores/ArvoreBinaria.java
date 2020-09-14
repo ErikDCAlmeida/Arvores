@@ -9,8 +9,6 @@ import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
 import Exceptions.NoNaoExiste;
 import InterfaceTrees.IArvoreBinaria;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -175,13 +173,76 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         /*Método para remover nó. Baseado nas seguintes regras:
         1- O nó é folha: seu pai aponta para o vazio.
         2- O nó tem um filho: seu pai agora aponta para seu filho.
-        3- O nó tem dois filhos: */
+        3- O nó tem dois filhos: ???????*/
+        if (this.raizDaArvore != null) {
+            No<T> noAux = pegarNo(elemento, this.raizDaArvore);
+            No<T> noPaiAux;
+            No<T> noFilhoAux;
 
+            if (noAux.possuiPai() == true) {
+                noPaiAux = noAux.getPai();
+                /*If para se caso o nó não tenha nenhum filho.*/
+                if (noAux.qntDeFilhosNo() == 0) {
+                    if (noPaiAux.getFilhoDireito() == noAux) {
+                        noPaiAux.setFilhoDireito(null);
+                        noAux.setPai(null);
+                        return true;
+                    } else if (noPaiAux.getFilhoEsquerdo() == noAux) {
+                        noPaiAux.setFilhoEsquerdo(null);
+                        noAux.setPai(null);
+                        return true;
+                    }
+                    /*Else para que se o nó tenha um filho.*/
+                } else if (noAux.qntDeFilhosNo() == 1){
+                    if (noAux.equals(noPaiAux.getFilhoDireito())) {
+                        if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
+                            noFilhoAux = noAux.getFilhoDireito();
+                            noPaiAux.setFilhoDireito(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoDireito(null);
+                            noAux.setPai(null);
+                            return true;
+                        } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
+                            noFilhoAux = noAux.getFilhoEsquerdo();
+                            noPaiAux.setFilhoDireito(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoEsquerdo(null);
+                            noAux.setPai(null);
+                            return true;
+                        }
+                    } else if (noAux.equals(noPaiAux.getFilhoEsquerdo())) {
+                        if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
+                            noFilhoAux = noAux.getFilhoDireito();
+                            noPaiAux.setFilhoEsquerdo(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoDireito(null);
+                            noAux.setPai(null);
+                            return true;
+                        } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
+                            noFilhoAux = noAux.getFilhoEsquerdo();
+                            noPaiAux.setFilhoEsquerdo(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoEsquerdo(null);
+                            noAux.setPai(null);
+                            return true;
+                        }
+                    }
+                    /*Else if para que se o nó tenha 2 filhos.*/
+                }else if(noAux.qntDeFilhosNo() == 2){
+                    System.out.println("Pra fazer!");
+                    return false;
+                }
+            } else {
+                noAux.setFilhoDireito(null);
+                noAux.setFilhoEsquerdo(null);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public StringBuilder navegarPelaArvore() throws NoNaoExiste {
+    public StringBuilder navegarPelaArvore() {
         /*Método que percorre a árvore baseado no LRN, LNR, NLR.*/
         StringBuilder string = new StringBuilder();
         StringBuilder stringLRN = new StringBuilder();
@@ -191,19 +252,13 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         stringLNR.append("\nLNR: ");
         stringNLR.append("\nNLR: ");
         if (this.raizDaArvore != null) {
-            int filhosRaiz;
-            filhosRaiz = this.grauNo(this.raizDaArvore.getElemento());
-            if (filhosRaiz > 0) {
-                stringLRN.append(this.LRN(this.raizDaArvore));
-                stringLNR.append(this.LNR(this.raizDaArvore));
-                stringNLR.append(this.NLR(this.raizDaArvore));
-            }
-        }else{
-            throw new NoNaoExiste(this.raizDaArvore.getElemento().toString());
+            stringLRN.append(this.LRN(this.raizDaArvore));
+            stringLNR.append(this.LNR(this.raizDaArvore));
+            stringNLR.append(this.NLR(this.raizDaArvore));
         }
         string.append(stringLRN).append(stringLNR).append(stringNLR);
         return string;
-    }    
+    }
 
     @Override
     public void inverterSubArvores() {
@@ -278,8 +333,8 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return contador;
     }
-    
-    private StringBuilder LRN(No<T> raizAtual){
+
+    private StringBuilder LRN(No<T> raizAtual) {
         /*Método que faz a busca dos nós seguindo a ordem LRN e 
         retornando um StringBuilder contendo os nós nessa ordem.*/
         StringBuilder string = new StringBuilder();
@@ -294,8 +349,8 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return string;
     }
-    
-    private StringBuilder LNR(No<T> raizAtual){
+
+    private StringBuilder LNR(No<T> raizAtual) {
         /*Método que faz a busca dos nós seguindo a ordem LNR e 
         retornando um StringBuilder contendo os nós nessa ordem.*/
         StringBuilder string = new StringBuilder();
@@ -310,8 +365,8 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return string;
     }
-    
-    private StringBuilder NLR(No<T> raizAtual){
+
+    private StringBuilder NLR(No<T> raizAtual) {
         /*Método que faz a busca dos nós seguindo a ordem NLR e 
         retornando um StringBuilder contendo os nós nessa ordem.*/
         StringBuilder string = new StringBuilder();
