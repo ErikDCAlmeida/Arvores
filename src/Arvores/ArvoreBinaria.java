@@ -9,6 +9,8 @@ import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
 import Exceptions.NoNaoExiste;
 import InterfaceTrees.IArvoreBinaria;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -193,7 +195,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
                         return true;
                     }
                     /*Else para que se o nó tenha um filho.*/
-                } else if (noAux.qntDeFilhosNo() == 1){
+                } else if (noAux.qntDeFilhosNo() == 1) {
                     if (noAux.equals(noPaiAux.getFilhoDireito())) {
                         if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
                             noFilhoAux = noAux.getFilhoDireito();
@@ -228,7 +230,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
                         }
                     }
                     /*Else if para que se o nó tenha 2 filhos.*/
-                }else if(noAux.qntDeFilhosNo() == 2){
+                } else if (noAux.qntDeFilhosNo() == 2) {
                     System.out.println("Pra fazer!");
                     return false;
                 }
@@ -261,9 +263,26 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     @Override
-    public void inverterSubArvores() {
+    public ArvoreBinaria<T> inverterSubArvores() {
         /*Método que permite a troca de sub-árvores de uma árvore. Imprimindo a árvore original e a árvore atualizada.*/
-
+        if (this.raizDaArvore != null) {
+            ArvoreBinaria<T> arvoreAux = new ArvoreBinaria<>();
+            try {
+                arvoreAux.adicionarNo(this.raizDaArvore.getElemento(), null, 'e');
+            } catch (PossuiFilhoNaDireita | PossuiFilhoNaEsquerda ex) {
+                Logger.getLogger(ArvoreBinaria.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                this.arvoreEspelhada(arvoreAux, this.raizDaArvore);
+            } catch (PossuiFilhoNaDireita | PossuiFilhoNaEsquerda ex) {
+                Logger.getLogger(ArvoreBinaria.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return arvoreAux;
+        } else {
+            System.out.println("Impossível inverter árvore!");
+            return null;
+        }
     }
 
     public No<T> getRaizDaArvore() {
@@ -381,4 +400,18 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return string;
     }
+
+    private void arvoreEspelhada(ArvoreBinaria<T> arvoreAux, No<T> noRaiz) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda {
+        if (noRaiz.possuiFilhoEsquerdo() == true) {
+            No<T> filhoEsquerdo = noRaiz.getFilhoEsquerdo();
+            arvoreAux.adicionarNo(filhoEsquerdo.getElemento(), filhoEsquerdo.getPai().getElemento(), 'd');
+            this.arvoreEspelhada(arvoreAux, noRaiz.getFilhoEsquerdo());
+        }
+        if (noRaiz.possuiFilhoDireito() == true) {
+            No<T> filhoDireito = noRaiz.getFilhoDireito();
+            arvoreAux.adicionarNo(filhoDireito.getElemento(), filhoDireito.getPai().getElemento(), 'e');
+            this.arvoreEspelhada(arvoreAux, noRaiz.getFilhoDireito());
+        }
+    }
+    
 }

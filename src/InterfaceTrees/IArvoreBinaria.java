@@ -5,6 +5,7 @@
  */
 package InterfaceTrees;
 
+import Arvores.ArvoreBinaria;
 import Exceptions.NoNaoExiste;
 import Exceptions.PossuiFilhoNaDireita;
 import Exceptions.PossuiFilhoNaEsquerda;
@@ -23,5 +24,5 @@ public interface IArvoreBinaria<T> {
     public abstract int quantidadeNoArvore();
     public abstract boolean removerNo(T elemento);
     public abstract StringBuilder navegarPelaArvore();
-    public abstract void inverterSubArvores();
+    public abstract ArvoreBinaria<T> inverterSubArvores();
 }   
