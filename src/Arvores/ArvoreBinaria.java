@@ -24,14 +24,23 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         this.raizDaArvore = null;
     }
 
+    /**
+     * Método responsável por adicionar um nó na árvore.<br/>
+     * No caso de não existir uma raiz, criará a raiz e em seguida os nós.
+     *
+     * @param elemento
+     * @param elementoNoPai
+     * @param posicao
+     * @throws PossuiFilhoNaDireita
+     * @throws PossuiFilhoNaEsquerda
+     */
     @Override
-    public void adicionarNo(T nome, T elementoNoPai, char posicao) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda {
-        /*Método responsável por adicionar um nó na árvore.*/
+    public void adicionarNo(T elemento, T elementoNoPai, char posicao) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda {
         if (this.raizDaArvore == null) {
-            this.raizDaArvore = new No<>(nome, null);
+            this.raizDaArvore = new No<>(elemento, null);
         } else {
             No<T> noPai = this.pegarNo(elementoNoPai, this.raizDaArvore);
-            No<T> noAux = new No<>(nome, noPai);
+            No<T> noAux = new No<>(elemento, noPai);
             if (posicao == 'e' && noPai.possuiFilhoEsquerdo() == true) {
                 throw new PossuiFilhoNaEsquerda();
             } else if (posicao == 'd' && noPai.possuiFilhoDireito() == true) {
@@ -48,29 +57,40 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Método responsável para consultar um elemento dentro da árvore e
+     * verificar se ele existe.
+     *
+     * @param elemento
+     * @return Retorna um <b>boolean</b> indicando a existência do nó.
+     */
     @Override
     public boolean consultarExistenciaNo(T elemento) {
-        /*Método responsável para consultar um elemento dentro da árvore. Verificar se ele existe.*/
         if (this.raizDaArvore == null) {
             return false;
         } else {
             if (this.raizDaArvore.getElemento().equals(elemento)) {
                 return true;
             } else {
-                No<T> raizAux = this.raizDaArvore;
-                No<T> filhoAux = this.pegarNo(elemento, raizAux);
+                No<T> filhoAux = this.pegarNo(elemento, this.raizDaArvore);
 
                 return filhoAux != null;
             }
         }
     }
 
+    /**
+     * Método responsável para saber o grau de um determinado nó.
+     *
+     * @param elemento
+     * @return Retorna um <b>int</b> indicando o grau do nó.
+     * @throws NoNaoExiste
+     */
     @Override
     public int grauNo(T elemento) throws NoNaoExiste {
-        /*Método responsável para saber o grau de um determinado nó.*/
         int contadorGrau = 0;
 
-        No<T> noAux = this.pegarNo(elemento, raizDaArvore);
+        No<T> noAux = this.pegarNo(elemento, this.raizDaArvore);
 
         if (noAux == null) {
             throw new NoNaoExiste(elemento.toString());
@@ -87,12 +107,18 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return contadorGrau;
     }
 
+    /**
+     * Método responsável para saber a profundidade de um determinado nó.
+     *
+     * @param elemento
+     * @return Retorna um <b>int</b> indicando a profundidade do nó.
+     * @throws NoNaoExiste
+     */
     @Override
     public int profundidadeNo(T elemento) throws NoNaoExiste {
-        /*Método responsável para saber a profundidade de um determinado nó.*/
         int profundidade = 0;
 
-        No<T> noAux = this.pegarNo(elemento, raizDaArvore);
+        No<T> noAux = this.pegarNo(elemento, this.raizDaArvore);
 
         if (noAux == null) {
             throw new NoNaoExiste(elemento.toString());
@@ -113,9 +139,15 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return 0;
     }
 
+    /**
+     * Método responsável por saber a altura de um determinado nó.
+     *
+     * @param elemento
+     * @return Retorna um <b>int</b> indicando a altura do nó.
+     * @throws NoNaoExiste
+     */
     @Override
     public int alturaNo(T elemento) throws NoNaoExiste {
-        /*Método responsável por saber a altura de um determinado nó.*/
         int altura = 0;
 
         No<T> noAux = this.pegarNo(elemento, raizDaArvore);
@@ -135,9 +167,15 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Método responsável por saber a nível de um determinado nó.
+     *
+     * @param elemento
+     * @return Retorna um <b>int</b> indicando o nível do nó.
+     * @throws NoNaoExiste
+     */
     @Override
     public int nivelNo(T elemento) throws NoNaoExiste {
-        /*Método responsável por saber a nível de um determinado nó.*/
         int nivel = 0;
 
         No<T> noAux = this.pegarNo(elemento, raizDaArvore);
@@ -159,93 +197,114 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Método recursivo para saber a quantidade de nós na árvore.
+     *
+     * @return Retorna um <b>int</b> indicando a quantidade de nós na árvore.
+     */
     @Override
-    public int quantidadeNoArvore() {
-        /*Método recursivo para saber a quantidade de nós na árvore.*/
+    public int quantidadeNoArvore(No<T> raizAtual) {
         if (this.raizDaArvore.possuiFilhoDireito() == false
                 && this.raizDaArvore.possuiFilhoEsquerdo() == false) {
             return 0;
         } else {
-            return contAux(this.raizDaArvore);
+            int contador = 0;
+            if (raizAtual != null) {
+                contador += 1;
+                if (raizAtual.possuiFilhoDireito() == true) {
+                    contador += this.quantidadeNoArvore(raizAtual.getFilhoDireito());
+                }
+
+                if (raizAtual.possuiFilhoEsquerdo() == true) {
+                    contador += this.quantidadeNoArvore(raizAtual.getFilhoEsquerdo());
+                }
+            }
+            return contador;
         }
     }
 
+    /**
+     * <b>Método para remover nó. Baseado nas seguintes regras:</b><br/>
+     * 1- O nó é folha: seu pai aponta para o vazio. <br/>
+     * 2- O nó tem um filho: seu pai agora aponta para seu filho. E o filho para
+     * o pai.<br/>
+     * 3- O nó tem dois filhos: usar a regra de dois filhos da <b>Árvore Binária
+     * de Busca.</b>
+     *
+     * @param elemento do tipo T.
+     * @return Retorna um <b>boolean</b> indicando se o nó foi removido ou não.
+     */
     @Override
     public boolean removerNo(T elemento) {
-        /*Método para remover nó. Baseado nas seguintes regras:
-        1- O nó é folha: seu pai aponta para o vazio.
-        2- O nó tem um filho: seu pai agora aponta para seu filho.
-        3- O nó tem dois filhos: ???????*/
-        if (this.raizDaArvore != null) {
-            No<T> noAux = pegarNo(elemento, this.raizDaArvore);
-            No<T> noPaiAux;
-            No<T> noFilhoAux;
-
-            if (noAux.possuiPai() == true) {
-                noPaiAux = noAux.getPai();
-                /*If para se caso o nó não tenha nenhum filho.*/
-                if (noAux.qntDeFilhosNo() == 0) {
-                    if (noPaiAux.getFilhoDireito() == noAux) {
-                        noPaiAux.setFilhoDireito(null);
-                        noAux.setPai(null);
-                        return true;
-                    } else if (noPaiAux.getFilhoEsquerdo() == noAux) {
-                        noPaiAux.setFilhoEsquerdo(null);
-                        noAux.setPai(null);
-                        return true;
-                    }
-                    /*Else para que se o nó tenha um filho.*/
-                } else if (noAux.qntDeFilhosNo() == 1) {
-                    if (noAux.equals(noPaiAux.getFilhoDireito())) {
-                        if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
-                            noFilhoAux = noAux.getFilhoDireito();
-                            noPaiAux.setFilhoDireito(noFilhoAux);
-                            noFilhoAux.setPai(noPaiAux);
-                            noAux.setFilhoDireito(null);
-                            noAux.setPai(null);
-                            return true;
-                        } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
-                            noFilhoAux = noAux.getFilhoEsquerdo();
-                            noPaiAux.setFilhoDireito(noFilhoAux);
-                            noFilhoAux.setPai(noPaiAux);
-                            noAux.setFilhoEsquerdo(null);
-                            noAux.setPai(null);
-                            return true;
-                        }
-                    } else if (noAux.equals(noPaiAux.getFilhoEsquerdo())) {
-                        if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
-                            noFilhoAux = noAux.getFilhoDireito();
-                            noPaiAux.setFilhoEsquerdo(noFilhoAux);
-                            noFilhoAux.setPai(noPaiAux);
-                            noAux.setFilhoDireito(null);
-                            noAux.setPai(null);
-                            return true;
-                        } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
-                            noFilhoAux = noAux.getFilhoEsquerdo();
-                            noPaiAux.setFilhoEsquerdo(noFilhoAux);
-                            noFilhoAux.setPai(noPaiAux);
-                            noAux.setFilhoEsquerdo(null);
-                            noAux.setPai(null);
-                            return true;
-                        }
-                    }
-                    /*Else if para que se o nó tenha 2 filhos.*/
-                } else if (noAux.qntDeFilhosNo() == 2) {
-                    System.out.println("Pra fazer!");
-                    return false;
+        No<T> noAux = pegarNo(elemento, this.raizDaArvore);
+        No<T> noPaiAux;
+        No<T> noFilhoAux;
+        if (noAux.possuiPai() == true) {
+            noPaiAux = noAux.getPai();
+            /*If para se caso o nó não tenha nenhum filho.*/
+            if (noAux.qntDeFilhosNo() == 0) {
+                if (noPaiAux.getFilhoDireito() == noAux) {
+                    noPaiAux.setFilhoDireito(null);
+                    noAux.setPai(null);
+                    return true;
+                } else if (noPaiAux.getFilhoEsquerdo() == noAux) {
+                    noPaiAux.setFilhoEsquerdo(null);
+                    noAux.setPai(null);
+                    return true;
                 }
-            } else {
-                noAux.setFilhoDireito(null);
-                noAux.setFilhoEsquerdo(null);
-                return true;
+                /*Else para que se o nó tenha um filho.*/
+            } else if (noAux.qntDeFilhosNo() == 1) {
+                if (noAux.equals(noPaiAux.getFilhoDireito())) {
+                    if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
+                        noFilhoAux = noAux.getFilhoDireito();
+                        noPaiAux.setFilhoDireito(noFilhoAux);
+                        noFilhoAux.setPai(noPaiAux);
+                        noAux.setFilhoDireito(null);
+                        noAux.setPai(null);
+                        return true;
+                    } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
+                        noFilhoAux = noAux.getFilhoEsquerdo();
+                        noPaiAux.setFilhoDireito(noFilhoAux);
+                        noFilhoAux.setPai(noPaiAux);
+                        noAux.setFilhoEsquerdo(null);
+                        noAux.setPai(null);
+                        return true;
+                    }
+                } else if (noAux.equals(noPaiAux.getFilhoEsquerdo())) {
+                    if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
+                        noFilhoAux = noAux.getFilhoDireito();
+                        noPaiAux.setFilhoEsquerdo(noFilhoAux);
+                        noFilhoAux.setPai(noPaiAux);
+                        noAux.setFilhoDireito(null);
+                        noAux.setPai(null);
+                        return true;
+                    } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
+                        noFilhoAux = noAux.getFilhoEsquerdo();
+                        noPaiAux.setFilhoEsquerdo(noFilhoAux);
+                        noFilhoAux.setPai(noPaiAux);
+                        noAux.setFilhoEsquerdo(null);
+                        noAux.setPai(null);
+                        return true;
+                    }
+                }
+                /*Else if para que se o nó tenha 2 filhos.*/
+            } else if (noAux.qntDeFilhosNo() == 2) {
+                return this.doisFilhos(noAux);
             }
+        } else {
+            return this.doisFilhos(noAux);
         }
         return false;
     }
 
+    /**
+     * Método que percorre a árvore baseado no LRN, LNR, NLR.
+     *
+     * @return Retorna um <b>StringBuilder</b> contendo ordem de navegação<br/>
+     * da árvore de acordo com as regras <b>LRN, LNR, NLR</b>.
+     */
     @Override
     public StringBuilder navegarPelaArvore() {
-        /*Método que percorre a árvore baseado no LRN, LNR, NLR.*/
         StringBuilder string = new StringBuilder();
         StringBuilder stringLRN = new StringBuilder();
         StringBuilder stringLNR = new StringBuilder();
@@ -262,9 +321,14 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return string;
     }
 
+    /**
+     * Método que permite a troca de sub-árvores de uma árvore. <br/>Imprimindo
+     * a árvore original e a árvore atualizada.
+     *
+     * @return Retorna uma nova <b>ArvoreBinária do tipo T</b>.
+     */
     @Override
     public ArvoreBinaria<T> inverterSubArvores() {
-        /*Método que permite a troca de sub-árvores de uma árvore. Imprimindo a árvore original e a árvore atualizada.*/
         if (this.raizDaArvore != null) {
             ArvoreBinaria<T> arvoreAux = new ArvoreBinaria<>();
             try {
@@ -272,7 +336,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             } catch (PossuiFilhoNaDireita | PossuiFilhoNaEsquerda ex) {
                 Logger.getLogger(ArvoreBinaria.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 this.arvoreEspelhada(arvoreAux, this.raizDaArvore);
             } catch (PossuiFilhoNaDireita | PossuiFilhoNaEsquerda ex) {
@@ -284,13 +348,170 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             return null;
         }
     }
-
-    public No<T> getRaizDaArvore() {
-        return raizDaArvore;
+    
+    public No<T> getRaiz(){
+        return this.raizDaArvore;
     }
-
+    
     //=============================Private Methods==============================
     //==========================================================================
+    private boolean doisFilhos(No<T> noParaSerApagado) {
+        No<T> paiNoApagado = noParaSerApagado.getPai();
+        No<T> paiNoAux = null;
+        No<T> noAux = noParaSerApagado.getFilhoDireito();
+        No<T> filhoDireitoNoAux = null;
+        No<T> noEsquerdo;
+
+        /*Após pegar o primeiro nó a direita, fica repetindo até
+        que encontre um nó a qual não possua um filho na esquerda,
+        com isso esse nó será pego para substituir o removido.*/
+        for (int i = 0; i < 1;) {
+            if (noAux.possuiFilhoEsquerdo()) {
+                noAux = noAux.getFilhoEsquerdo();
+            } else {
+                break;
+            }
+        }
+
+        /*Verificando se nó a qual está sendo escolhido pra ser o
+        substituto possui ou não um filho na direita.*/
+        if (noAux.possuiFilhoDireito()) {
+            filhoDireitoNoAux = noAux.getFilhoDireito();
+        }
+
+        /*Verificando se o pai do nó que foi escolhido pra ser o
+        substituto é igual ao nó que está sendo apagado.*/
+        if (!noAux.getPai().equals(noParaSerApagado)) {
+            paiNoAux = noAux.getPai();
+        }
+        //Iniciando a troca por baixo para não destruir a árvore:
+        /*Verificando se o existe um filho na direita do nó substituto.*/
+        if (filhoDireitoNoAux != null && paiNoAux != null) {
+
+            if (paiNoApagado != null) {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                filhoDireitoNoAux.setPai(paiNoAux);
+                paiNoAux.setFilhoEsquerdo(filhoDireitoNoAux);
+                paiNoAux.setPai(noAux);
+                noAux.setPai(paiNoApagado);
+                noEsquerdo.setPai(noAux);
+                noAux.setFilhoDireito(paiNoAux);
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                if (noParaSerApagado.equals(paiNoApagado.getFilhoDireito())) {
+                    paiNoApagado.setFilhoDireito(noAux);
+                } else {
+                    paiNoApagado.setFilhoEsquerdo(noAux);
+                }
+                noParaSerApagado.setPai(null);
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                return true;
+            } else {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                filhoDireitoNoAux.setPai(paiNoAux);
+                paiNoAux.setFilhoEsquerdo(filhoDireitoNoAux);
+                paiNoAux.setPai(noAux);
+                noEsquerdo.setPai(noAux);
+                noAux.setFilhoDireito(paiNoAux);
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noAux.setPai(null);
+                this.raizDaArvore = noAux;
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                return true;
+            }
+
+        } else if (filhoDireitoNoAux != null && paiNoAux == null) {
+
+            if (paiNoApagado != null) {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                noAux.setPai(paiNoApagado);
+                noEsquerdo.setPai(noAux);
+                if (noParaSerApagado.equals(paiNoApagado.getFilhoDireito())) {
+                    paiNoApagado.setFilhoDireito(noAux);
+                } else {
+                    paiNoApagado.setFilhoEsquerdo(noAux);
+                }
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                noParaSerApagado.setPai(null);
+                return true;
+            } else {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noEsquerdo.setPai(noAux);
+                noAux.setPai(null);
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                this.raizDaArvore = noAux;
+                return true;
+            }
+
+        } else if (filhoDireitoNoAux == null && paiNoAux != null) {
+
+            if (paiNoApagado != null) {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                noAux.setPai(paiNoApagado);
+                if (noParaSerApagado.equals(paiNoApagado.getFilhoDireito())) {
+                    paiNoApagado.setFilhoDireito(noAux);
+                } else {
+                    paiNoApagado.setFilhoEsquerdo(noAux);
+                }
+                paiNoAux.setPai(noAux);
+                noAux.setFilhoDireito(paiNoAux);
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noEsquerdo.setPai(noAux);
+                paiNoAux.setFilhoEsquerdo(null);
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                noParaSerApagado.setPai(null);
+                return true;
+            } else {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noEsquerdo.setPai(noAux);
+                noAux.setFilhoDireito(paiNoAux);
+                paiNoAux.setPai(noAux);
+                paiNoAux.setFilhoEsquerdo(null);
+                noAux.setPai(null);
+                this.raizDaArvore = noAux;
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                return true;
+            }
+
+        } else if (filhoDireitoNoAux == null & paiNoAux == null) {
+
+            if (paiNoApagado != null) {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noEsquerdo.setPai(noAux);
+                noAux.setPai(paiNoApagado);
+                if (noParaSerApagado.equals(paiNoApagado.getFilhoDireito())) {
+                    paiNoApagado.setFilhoDireito(noAux);
+                } else {
+                    paiNoApagado.setFilhoEsquerdo(noAux);
+                }
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                noParaSerApagado.setPai(null);
+                return true;
+            } else {
+                noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
+                noAux.setFilhoEsquerdo(noEsquerdo);
+                noEsquerdo.setPai(noAux);
+                noAux.setPai(null);
+                this.raizDaArvore = noAux;
+                noParaSerApagado.setFilhoDireito(null);
+                noParaSerApagado.setFilhoEsquerdo(null);
+                return true;
+            }
+
+        }
+        return false;
+    }
+
     private No<T> pegarNo(T elemento, No<T> noRaiz) {
         /*Método private que retorna um nó.
         Necessário passar o elemento do nó desejado e a raiz atual da árvore.*/
@@ -335,22 +556,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             return alturaRaizEsquerda;
         }
         return 0;
-    }
-
-    private int contAux(No<T> raiz) {
-        /*Método auxiliar para retornar a quantidade de nós de uma árvore.*/
-        int contador = 0;
-        if (raiz != null) {
-            contador += 1;
-            if (raiz.possuiFilhoDireito() == true) {
-                contador += this.contAux(raiz.getFilhoDireito());
-            }
-
-            if (raiz.possuiFilhoEsquerdo() == true) {
-                contador += this.contAux(raiz.getFilhoEsquerdo());
-            }
-        }
-        return contador;
     }
 
     private StringBuilder LRN(No<T> raizAtual) {
@@ -413,5 +618,5 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             this.arvoreEspelhada(arvoreAux, noRaiz.getFilhoDireito());
         }
     }
-    
+
 }
