@@ -5,19 +5,16 @@
  */
 package InterfaceTrees;
 
-import Arvores.ArvoreBinaria;
 import Arvores.ArvoreBinariaBusca;
 import Arvores.No;
 import Exceptions.NoNaoExiste;
-import Exceptions.PossuiFilhoNaDireita;
-import Exceptions.PossuiFilhoNaEsquerda;
 
 /**
  *
  * @author EriikD
  */
-public interface IArvoreBinaria<T extends Comparable<T>> {
-    public abstract void adicionarNo(T elemento, T elementoNoPai, char posFilho) throws PossuiFilhoNaDireita, PossuiFilhoNaEsquerda;
+public interface IArvoreBinariaBusca<T> {
+    public abstract void adicionarNo(T elemento);
     public abstract boolean consultarExistenciaNo(T elemento);
     public abstract int grauNo(T elemento) throws NoNaoExiste;
     public abstract int profundidadeNo(T elemento)throws NoNaoExiste;
@@ -26,6 +23,4 @@ public interface IArvoreBinaria<T extends Comparable<T>> {
     public abstract int quantidadeNoArvore(No<T> raizAtual);
     public abstract boolean removerNo(T elemento);
     public abstract StringBuilder navegarPelaArvore();
-    public abstract ArvoreBinaria<T> inverterSubArvores();
-    public abstract ArvoreBinariaBusca<T> transformarEmBinariaBusca();
-}   
+}
