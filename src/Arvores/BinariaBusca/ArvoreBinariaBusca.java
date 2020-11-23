@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Arvores;
+package Arvores.BinariaBusca;
 
+import Arvores.No;
 import Exceptions.NoNaoExiste;
 import InterfaceTrees.IArvoreBinariaBusca;
+
 /**
  *
- * @author EriikD
+ * @author ErikDCAlmeida
  */
-public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinariaBusca<T>{
-    
+public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinariaBusca<T> {
+
     private No<T> raizDaArvore;
 
     public ArvoreBinariaBusca() {
@@ -27,28 +24,30 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
             this.addAux(this.raizDaArvore, elemento);
         }
     }
-    
-    private void addAux(No<T> raizAtual, T element){
+
+    private void addAux(No<T> raizAtual, T element) {
         if (element.compareTo(raizAtual.getElemento()) < 0) {
             if (raizAtual.possuiFilhoEsquerdo() == false) {
-                raizAtual.setFilhoEsquerdo(new No(element, raizAtual));
-            }else{
+                raizAtual.setFilhoEsquerdo(new No<>(element, raizAtual));
+            } else {
                 this.addAux(raizAtual.getFilhoEsquerdo(), element);
             }
         } else if (element.compareTo(raizAtual.getElemento()) > 0) {
             if (raizAtual.possuiFilhoDireito() == false) {
-                raizAtual.setFilhoDireito(new No(element, raizAtual));
+                raizAtual.setFilhoDireito(new No<>(element, raizAtual));
             } else {
                 this.addAux(raizAtual.getFilhoDireito(), element);
             }
         } else {
-            System.out.println("Já existe na árvore um elemento adicionado como esse!");
+            System.out.println("Jï¿½ existe na ï¿½rvore um elemento adicionado como esse!");
         }
     }
-    
+
     private No<T> pegarNo(T elemento, No<T> noRaiz) {
-        /*Método private que retorna um nó.
-        Necessário passar o elemento do nó desejado e a raiz atual da árvore.*/
+        /*
+         * Mï¿½todo private que retorna um nï¿½. Necessï¿½rio passar o elemento do nï¿½ desejado
+         * e a raiz atual da ï¿½rvore.
+         */
         No<T> filhoEsquerdo;
         No<T> filhoDireito;
         if (noRaiz != null) {
@@ -150,9 +149,9 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
             }
         }
     }
-    
+
     private int pegarAltura(No<T> raiz) {
-        /*Método que permite pegar a altura de um nó.*/
+        /* Mï¿½todo que permite pegar a altura de um nï¿½. */
         int alturaRaizEsquerda = 0;
         int alturaRaizDireita = 0;
 
@@ -199,8 +198,7 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
 
     @Override
     public int quantidadeNoArvore(No<T> raizAtual) {
-        if (this.raizDaArvore.possuiFilhoDireito() == false
-                && this.raizDaArvore.possuiFilhoEsquerdo() == false) {
+        if (this.raizDaArvore.possuiFilhoDireito() == false && this.raizDaArvore.possuiFilhoEsquerdo() == false) {
             return 1;
         } else {
             int contador = 0;
@@ -219,66 +217,61 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
     }
 
     @Override
-    public boolean removerNo(T elemento) {
+    public void removerNo(T elemento) {
         No<T> noAux = pegarNo(elemento, this.raizDaArvore);
         No<T> noPaiAux;
         No<T> noFilhoAux;
-        if (noAux.possuiPai() == true) {
-            noPaiAux = noAux.getPai();
-            /*If para se caso o nó não tenha nenhum filho.*/
-            if (noAux.qntDeFilhosNo() == 0) {
-                if (noPaiAux.getFilhoDireito() == noAux) {
-                    noPaiAux.setFilhoDireito(null);
-                    noAux.setPai(null);
-                    return true;
-                } else if (noPaiAux.getFilhoEsquerdo() == noAux) {
-                    noPaiAux.setFilhoEsquerdo(null);
-                    noAux.setPai(null);
-                    return true;
-                }
-                /*Else para que se o nó tenha um filho.*/
-            } else if (noAux.qntDeFilhosNo() == 1) {
-                if (noAux.equals(noPaiAux.getFilhoDireito())) {
-                    if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
-                        noFilhoAux = noAux.getFilhoDireito();
-                        noPaiAux.setFilhoDireito(noFilhoAux);
-                        noFilhoAux.setPai(noPaiAux);
-                        noAux.setFilhoDireito(null);
+        if (noAux != null) {
+            if (noAux.possuiPai() == true) {
+                noPaiAux = noAux.getPai();
+                /* If para se caso o nï¿½ nï¿½o tenha nenhum filho. */
+                if (noAux.qntDeFilhosNo() == 0) {
+                    if (noPaiAux.getFilhoDireito() == noAux) {
+                        noPaiAux.setFilhoDireito(null);
                         noAux.setPai(null);
-                        return true;
-                    } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
-                        noFilhoAux = noAux.getFilhoEsquerdo();
-                        noPaiAux.setFilhoDireito(noFilhoAux);
-                        noFilhoAux.setPai(noPaiAux);
-                        noAux.setFilhoEsquerdo(null);
+                    } else if (noPaiAux.getFilhoEsquerdo() == noAux) {
+                        noPaiAux.setFilhoEsquerdo(null);
                         noAux.setPai(null);
-                        return true;
                     }
-                } else if (noAux.equals(noPaiAux.getFilhoEsquerdo())) {
-                    if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
-                        noFilhoAux = noAux.getFilhoDireito();
-                        noPaiAux.setFilhoEsquerdo(noFilhoAux);
-                        noFilhoAux.setPai(noPaiAux);
-                        noAux.setFilhoDireito(null);
-                        noAux.setPai(null);
-                        return true;
-                    } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
-                        noFilhoAux = noAux.getFilhoEsquerdo();
-                        noPaiAux.setFilhoEsquerdo(noFilhoAux);
-                        noFilhoAux.setPai(noPaiAux);
-                        noAux.setFilhoEsquerdo(null);
-                        noAux.setPai(null);
-                        return true;
+                    /* Else para que se o nï¿½ tenha um filho. */
+                } else if (noAux.qntDeFilhosNo() == 1) {
+                    if (noAux.equals(noPaiAux.getFilhoDireito())) {
+                        if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
+                            noFilhoAux = noAux.getFilhoDireito();
+                            noPaiAux.setFilhoDireito(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoDireito(null);
+                            noAux.setPai(null);
+                        } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
+                            noFilhoAux = noAux.getFilhoEsquerdo();
+                            noPaiAux.setFilhoDireito(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoEsquerdo(null);
+                            noAux.setPai(null);
+                        }
+                    } else if (noAux.equals(noPaiAux.getFilhoEsquerdo())) {
+                        if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
+                            noFilhoAux = noAux.getFilhoDireito();
+                            noPaiAux.setFilhoEsquerdo(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoDireito(null);
+                            noAux.setPai(null);
+                        } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
+                            noFilhoAux = noAux.getFilhoEsquerdo();
+                            noPaiAux.setFilhoEsquerdo(noFilhoAux);
+                            noFilhoAux.setPai(noPaiAux);
+                            noAux.setFilhoEsquerdo(null);
+                            noAux.setPai(null);
+                        }
                     }
+                    /* Else if para que se o nï¿½ tenha 2 filhos. */
+                } else if (noAux.qntDeFilhosNo() == 2) {
+                    this.doisFilhos(noAux);
                 }
-                /*Else if para que se o nó tenha 2 filhos.*/
-            } else if (noAux.qntDeFilhosNo() == 2) {
-                return this.doisFilhos(noAux);
+            } else {
+                this.doisFilhos(noAux);
             }
-        } else {
-            return this.doisFilhos(noAux);
         }
-        return false;
     }
 
     @Override
@@ -291,9 +284,9 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
         stringLNR.append("\nLNR: ");
         stringNLR.append("\nNLR: ");
         if (this.raizDaArvore != null) {
-            stringLRN.append(this.LRN(this.raizDaArvore));
-            stringLNR.append(this.LNR(this.raizDaArvore));
-            stringNLR.append(this.NLR(this.raizDaArvore));
+            stringLRN.append(this.navegacaoLRN(this.raizDaArvore));
+            stringLNR.append(this.navegacaoLNR(this.raizDaArvore));
+            stringNLR.append(this.navegacaoNLR(this.raizDaArvore));
         }
         string.append(stringLRN).append(stringLNR).append(stringNLR);
         return string;
@@ -302,18 +295,20 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
     public No<T> getRaizDaArvore() {
         return raizDaArvore;
     }
-    
-    /*=============================PRIVATE METHODS============================*/
-    private boolean doisFilhos(No<T> noParaSerApagado) {
+
+    /* =============================PRIVATE METHODS============================ */
+    private void doisFilhos(No<T> noParaSerApagado) {
         No<T> paiNoApagado = noParaSerApagado.getPai();
         No<T> paiNoAux = null;
         No<T> noAux = noParaSerApagado.getFilhoDireito();
         No<T> filhoDireitoNoAux = null;
         No<T> noEsquerdo;
 
-        /*Após pegar o primeiro nó a direita, fica repetindo até
-        que encontre um nó a qual não possua um filho na esquerda,
-        com isso esse nó será pego para substituir o removido.*/
+        /*
+         * Apï¿½s pegar o primeiro nï¿½ a direita, fica repetindo atï¿½ que encontre um nï¿½ a
+         * qual nï¿½o possua um filho na esquerda, com isso esse nï¿½ serï¿½ pego para
+         * substituir o removido.
+         */
         for (int i = 0; i < 1;) {
             if (noAux.possuiFilhoEsquerdo()) {
                 noAux = noAux.getFilhoEsquerdo();
@@ -322,19 +317,23 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
             }
         }
 
-        /*Verificando se nó a qual está sendo escolhido pra ser o
-        substituto possui ou não um filho na direita.*/
+        /*
+         * Verificando se nï¿½ a qual estï¿½ sendo escolhido pra ser o substituto possui ou
+         * nï¿½o um filho na direita.
+         */
         if (noAux.possuiFilhoDireito()) {
             filhoDireitoNoAux = noAux.getFilhoDireito();
         }
 
-        /*Verificando se o pai do nó que foi escolhido pra ser o
-        substituto é igual ao nó que está sendo apagado.*/
+        /*
+         * Verificando se o pai do nï¿½ que foi escolhido pra ser o substituto ï¿½ igual ao
+         * nï¿½ que estï¿½ sendo apagado.
+         */
         if (!noAux.getPai().equals(noParaSerApagado)) {
             paiNoAux = noAux.getPai();
         }
-        //Iniciando a troca por baixo para não destruir a árvore:
-        /*Verificando se o existe um filho na direita do nó substituto.*/
+        // Iniciando a troca por baixo para nï¿½o destruir a ï¿½rvore:
+        /* Verificando se o existe um filho na direita do nï¿½ substituto. */
         if (filhoDireitoNoAux != null && paiNoAux != null) {
 
             if (paiNoApagado != null) {
@@ -354,7 +353,6 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 noParaSerApagado.setPai(null);
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
-                return true;
             } else {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
                 filhoDireitoNoAux.setPai(paiNoAux);
@@ -367,10 +365,9 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 this.raizDaArvore = noAux;
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
-                return true;
             }
 
-        } else if (filhoDireitoNoAux != null && paiNoAux == null) {
+        } else if (filhoDireitoNoAux != null) {
 
             if (paiNoApagado != null) {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
@@ -385,7 +382,6 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
                 noParaSerApagado.setPai(null);
-                return true;
             } else {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
                 noAux.setFilhoEsquerdo(noEsquerdo);
@@ -394,10 +390,9 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
                 this.raizDaArvore = noAux;
-                return true;
             }
 
-        } else if (filhoDireitoNoAux == null && paiNoAux != null) {
+        } else if (paiNoAux != null) {
 
             if (paiNoApagado != null) {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
@@ -415,7 +410,6 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
                 noParaSerApagado.setPai(null);
-                return true;
             } else {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
                 noAux.setFilhoEsquerdo(noEsquerdo);
@@ -427,10 +421,9 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 this.raizDaArvore = noAux;
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
-                return true;
             }
 
-        } else if (filhoDireitoNoAux == null & paiNoAux == null) {
+        } else {
 
             if (paiNoApagado != null) {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
@@ -445,7 +438,6 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
                 noParaSerApagado.setPai(null);
-                return true;
             } else {
                 noEsquerdo = noParaSerApagado.getFilhoEsquerdo();
                 noAux.setFilhoEsquerdo(noEsquerdo);
@@ -454,56 +446,59 @@ public class ArvoreBinariaBusca<T extends Comparable<T>> implements IArvoreBinar
                 this.raizDaArvore = noAux;
                 noParaSerApagado.setFilhoDireito(null);
                 noParaSerApagado.setFilhoEsquerdo(null);
-                return true;
             }
-
         }
-        return false;
     }
-    
-    private StringBuilder LRN(No<T> raizAtual) {
-        /*Método que faz a busca dos nós seguindo a ordem LRN e 
-        retornando um StringBuilder contendo os nós nessa ordem.*/
+
+    private StringBuilder navegacaoLRN(No<T> raizAtual) {
+        /*
+         * Mï¿½todo que faz a busca dos nï¿½s seguindo a ordem LRN e retornando um
+         * StringBuilder contendo os nï¿½s nessa ordem.
+         */
         StringBuilder string = new StringBuilder();
         if (raizAtual != null) {
             if (raizAtual.possuiFilhoEsquerdo() == true) {
-                string.append(this.LRN(raizAtual.getFilhoEsquerdo()));
+                string.append(this.navegacaoLRN(raizAtual.getFilhoEsquerdo()));
             }
             if (raizAtual.possuiFilhoDireito() == true) {
-                string.append(this.LRN(raizAtual.getFilhoDireito()));
+                string.append(this.navegacaoLRN(raizAtual.getFilhoDireito()));
             }
             string.append(raizAtual.getElemento()).append(" ");
         }
         return string;
     }
 
-    private StringBuilder LNR(No<T> raizAtual) {
-        /*Método que faz a busca dos nós seguindo a ordem LNR e 
-        retornando um StringBuilder contendo os nós nessa ordem.*/
+    private StringBuilder navegacaoLNR(No<T> raizAtual) {
+        /*
+         * Mï¿½todo que faz a busca dos nï¿½s seguindo a ordem LNR e retornando um
+         * StringBuilder contendo os nï¿½s nessa ordem.
+         */
         StringBuilder string = new StringBuilder();
         if (raizAtual != null) {
             if (raizAtual.possuiFilhoEsquerdo() == true) {
-                string.append(this.LNR(raizAtual.getFilhoEsquerdo()));
+                string.append(this.navegacaoLNR(raizAtual.getFilhoEsquerdo()));
             }
             string.append(raizAtual.getElemento()).append(" ");
             if (raizAtual.possuiFilhoDireito() == true) {
-                string.append(this.LNR(raizAtual.getFilhoDireito()));
+                string.append(this.navegacaoLNR(raizAtual.getFilhoDireito()));
             }
         }
         return string;
     }
 
-    private StringBuilder NLR(No<T> raizAtual) {
-        /*Método que faz a busca dos nós seguindo a ordem NLR e 
-        retornando um StringBuilder contendo os nós nessa ordem.*/
+    private StringBuilder navegacaoNLR(No<T> raizAtual) {
+        /*
+         * Mï¿½todo que faz a busca dos nï¿½s seguindo a ordem NLR e retornando um
+         * StringBuilder contendo os nï¿½s nessa ordem.
+         */
         StringBuilder string = new StringBuilder();
         if (raizAtual != null) {
             string.append(raizAtual.getElemento()).append(" ");
             if (raizAtual.possuiFilhoEsquerdo() == true) {
-                string.append(this.NLR(raizAtual.getFilhoEsquerdo()));
+                string.append(this.navegacaoNLR(raizAtual.getFilhoEsquerdo()));
             }
             if (raizAtual.possuiFilhoDireito() == true) {
-                string.append(this.NLR(raizAtual.getFilhoDireito()));
+                string.append(this.navegacaoNLR(raizAtual.getFilhoDireito()));
             }
         }
         return string;

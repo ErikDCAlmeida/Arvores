@@ -1,119 +1,136 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Execucao;
 
-import Arvores.ArvoreBinaria;
-import Arvores.ArvoreBinariaBusca;
+import java.util.Scanner;
+
+import Arvores.ArvoreAVL.AVL;
+import Arvores.ArvoreAVL.MenuAVL;
 
 /**
  *
- * @author EriikD
+ * @author ErikDCAlmeida
  */
-public class main {
+public class Main {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception {
-
-        ArvoreBinaria<Integer> tree = new ArvoreBinaria<>();
-
-        ArvoreBinaria<Integer> treeSec = new ArvoreBinaria<>();
-
-//        tree.adicionarNo(0, null, 'e');
-//        tree.adicionarNo(1, 0, 'e');
-//        tree.adicionarNo(2, 1, 'e');
-//        tree.adicionarNo(3, 1, 'd');
-//        tree.adicionarNo(4, 2, 'e');
-//        tree.adicionarNo(5, 2, 'd');
-//        tree.adicionarNo(6, 3, 'e');
-//        tree.adicionarNo(7, 3, 'd');
-//        tree.adicionarNo(8, 6, 'd');
-//        tree.adicionarNo(9, 0, 'd');
-//        tree.adicionarNo(10, 9, 'e');
-//        tree.adicionarNo(11, 9, 'd');
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
         
-        tree.adicionarNo(80, null, 'e');
-        tree.adicionarNo(90, 80, 'e');
-        tree.adicionarNo(10, 80, 'd');
-        tree.adicionarNo(5, 90, 'e');
-        tree.adicionarNo(15, 90, 'd');
-        tree.adicionarNo(20, 10, 'e');
-        tree.adicionarNo(2, 10, 'd');
-        tree.adicionarNo(30, 20, 'e');
-        tree.adicionarNo(7, 20, 'd');
+        System.out.print("Das opções abaixo, escolha a opção da árvore que deseja testar:"
+        + "\n1 - Árvore Binária.\n2 - Árvore Binária de Busca.\n3 - Árvore AVL." + "\nEsolha: ");
+        int escolhaMenu = scan.nextInt();
+        if (escolhaMenu == 1) {
+            
+        } else if (escolhaMenu == 2) {
 
-        treeSec.adicionarNo(80, null, 'e');
-        treeSec.adicionarNo(90, 80, 'e');
-        treeSec.adicionarNo(10, 80, 'd');
-        treeSec.adicionarNo(5, 90, 'e');
-        treeSec.adicionarNo(15, 90, 'd');
-        treeSec.adicionarNo(20, 10, 'e');
-        treeSec.adicionarNo(2, 10, 'd');
-        treeSec.adicionarNo(30, 20, 'e');
-        //treeSec.adicionarNo(7, 20, 'd');
+        } else if (escolhaMenu == 3) {
+            MenuAVL menu = new MenuAVL();
+            menu.start();
+        }
+        scan.close();
+        
 
-//        System.out.println("Consular exist�ncia: " + tree.consultarExistenciaNo(4));
-//        System.out.println("Grau de um n�: " + tree.grauNo(1));
-//        System.out.println("Profundidade de um n�: " + tree.profundidadeNo(4));
-//        System.out.println("Altura de um n�: " + tree.alturaNo(1));
-//        System.out.println("N�vel de um n�: " + tree.nivelNo(4));
-        System.out.println("Quantidade de nos na arvore: " + tree.quantidadeNoArvore(tree.getRaiz()));
-        System.out.println("Ordens de navegacao: " + tree.navegarPelaArvore() + "\n");
-        System.out.println("Verificar se árvores são iguais: " + tree.verificarSimilaridade(treeSec));
-        System.out.println("Menor valor da árvore: " + tree.menorValorArvore(tree.getRaiz()));
-        System.out.println("Media dos valores da árvore: " + tree.mediaDosValoresNaArvore());
-        System.out.println("Soma dos nós pares: " + tree.somaDosNosPares(tree.getRaiz()));
-//        
-        /*System.out.println("Removendo no..." + tree.removerNo(20));
-        System.out.println("Quantidade de nos na arvore: " + tree.quantidadeNoArvore(tree.getRaiz()));
-        System.out.println("Ordens de navegacao: " + tree.navegarPelaArvore() + "\n");*/
+        System.out.println("AVL SENDO O PRIMEIRO NÚMERO RAIZ E O QUE MUDA:\n"
+        + "=========================================================");
+        AVL<Integer> arvAVL = new AVL<>();
+        arvAVL.adicionarNo(10);
+        arvAVL.adicionarNo(5);
+        arvAVL.adicionarNo(12);
+        arvAVL.adicionarNo(11);
+        arvAVL.adicionarNo(14);
+        arvAVL.adicionarNo(15);
+        System.out.println("AVL RSE:" + arvAVL.navegarPelaArvore());
 
-        /*ArvoreBinariaBusca<Integer> treeSearch = tree.transformarEmBinariaBusca();
-        System.out.println(treeSearch.navegarPelaArvore());*/
-        System.out.println();
-        ArvoreBinaria<Integer> arvoreAux = tree.inverterSubArvores();
-        System.out.println("Quantidade de nos na arvore: " + arvoreAux.quantidadeNoArvore(tree.getRaiz()));
-        System.out.println("Ordens de navegacao: " + arvoreAux.navegarPelaArvore());
-        System.out.println();
-        System.out.println("Removendo no..." + arvoreAux.removerNo(20));
-        System.out.println("Quantidade de nos na arvore: " + arvoreAux.quantidadeNoArvore(arvoreAux.getRaiz()));
-        System.out.println("Ordens de navegacao: " + arvoreAux.navegarPelaArvore() + "\n");
+        AVL<Integer> arvAVL2 = new AVL<>();
+        arvAVL2.adicionarNo(10);
+        arvAVL2.adicionarNo(5);
+        arvAVL2.adicionarNo(11);
+        arvAVL2.adicionarNo(3);
+        arvAVL2.adicionarNo(6);
+        arvAVL2.adicionarNo(4);
+        System.out.println("\nAVL RSD:" + arvAVL2.navegarPelaArvore());
+    
+        AVL<Integer> arvAVL3 = new AVL<>();
+        arvAVL3.adicionarNo(10);
+        arvAVL3.adicionarNo(5);
+        arvAVL3.adicionarNo(15);
+        arvAVL3.adicionarNo(2);
+        arvAVL3.adicionarNo(7);
+        arvAVL3.adicionarNo(6);
+        System.out.println("\nAVL RDD:" + arvAVL3.navegarPelaArvore());
 
-//       ArvoreBinariaBusca<Integer> treeSearch = new ArvoreBinariaBusca<>();
-//        
-//        treeSearch.adicionarNo(50);
-//        treeSearch.adicionarNo(20);
-//        treeSearch.adicionarNo(80);
-//        treeSearch.adicionarNo(10);
-//        treeSearch.adicionarNo(25);
-//        treeSearch.adicionarNo(60);
-//        /*treeSearch.adicionarNo(90);
-//        treeSearch.adicionarNo(5);
-//        treeSearch.adicionarNo(7);
-//        treeSearch.adicionarNo(22);
-//        treeSearch.adicionarNo(27);
-//        treeSearch.adicionarNo(82);
-//        treeSearch.adicionarNo(95);
-//        treeSearch.adicionarNo(21);
-//        treeSearch.adicionarNo(81);
-//        treeSearch.adicionarNo(85);
-//        treeSearch.adicionarNo(93);
-//        treeSearch.adicionarNo(100);*/
-//        
-//        System.out.println("No existe? " + treeSearch.consultarExistenciaNo(10));
-//        System.out.println("Grau do n�: " + treeSearch.grauNo(80));
-//        System.out.println("Profundidade de um n�: " + treeSearch.profundidadeNo(20));
-//        System.out.println("Altura de um n�: " + treeSearch.alturaNo(20));
-//        System.out.println("N�vel de um n�: " + treeSearch.nivelNo(20));
-//        System.out.println("Quantidade de n�s na �rvore: " + treeSearch.quantidadeNoArvore(treeSearch.getRaizDaArvore()));
-//        System.out.println("Ordens de navega��o: " + treeSearch.navegarPelaArvore() + "\n");
-//        System.out.println("");
-//        System.out.println(treeSearch.removerNo(20));
-//        System.out.println("Ordens de navega��o: " + treeSearch.navegarPelaArvore() + "\n");
+        AVL<Integer> arvAVL4 = new AVL<>();
+        arvAVL4.adicionarNo(10);
+        arvAVL4.adicionarNo(5);
+        arvAVL4.adicionarNo(20);
+        arvAVL4.adicionarNo(22);
+        arvAVL4.adicionarNo(12);
+        arvAVL4.adicionarNo(11);
+        System.out.println("\nAVL RDE:" + arvAVL4.navegarPelaArvore());
+
+        System.out.println("\nAVL SENDO O PRIMEIRO NÚMERO NÃO RAIZ E O QUE MUDA:\n"
+        + "=========================================================");
+        AVL<Integer> arvAVL5 = new AVL<>();
+        arvAVL5.adicionarNo(8);
+        arvAVL5.adicionarNo(6);
+        arvAVL5.adicionarNo(10);
+        arvAVL5.adicionarNo(4);
+        arvAVL5.adicionarNo(7);
+        arvAVL5.adicionarNo(9);
+        arvAVL5.adicionarNo(12);
+        arvAVL5.adicionarNo(3);
+        arvAVL5.adicionarNo(11);
+        arvAVL5.adicionarNo(14);
+        arvAVL5.adicionarNo(15);
+        System.out.println("AVL RSE:" + arvAVL5.navegarPelaArvore());
+
+        AVL<Integer> arvAVL6 = new AVL<>();
+        arvAVL6.adicionarNo(20);
+        arvAVL6.adicionarNo(10);
+        arvAVL6.adicionarNo(25);
+        arvAVL6.adicionarNo(5);
+        arvAVL6.adicionarNo(11);
+        arvAVL6.adicionarNo(24);
+        arvAVL6.adicionarNo(29);
+        arvAVL6.adicionarNo(3);
+        arvAVL6.adicionarNo(6);
+        arvAVL6.adicionarNo(30);
+        arvAVL6.adicionarNo(4);
+        System.out.println("\nAVL RSD:" + arvAVL6.navegarPelaArvore());
+    
+        AVL<Integer> arvAVL7 = new AVL<>();
+        arvAVL7.adicionarNo(20);
+        arvAVL7.adicionarNo(10);
+        arvAVL7.adicionarNo(25);
+        arvAVL7.adicionarNo(5);
+        arvAVL7.adicionarNo(15);
+        arvAVL7.adicionarNo(24);
+        arvAVL7.adicionarNo(29);
+        arvAVL7.adicionarNo(2);
+        arvAVL7.adicionarNo(7);
+        arvAVL7.adicionarNo(30);
+        arvAVL7.adicionarNo(6);
+        System.out.println("\nAVL RDD:" + arvAVL7.navegarPelaArvore());
+
+        AVL<Integer> arvAVL8 = new AVL<>();
+        arvAVL8.adicionarNo(8);
+        arvAVL8.adicionarNo(6);
+        arvAVL8.adicionarNo(10);
+        arvAVL8.adicionarNo(4);
+        arvAVL8.adicionarNo(7);
+        arvAVL8.adicionarNo(9);
+        arvAVL8.adicionarNo(20);
+        arvAVL8.adicionarNo(3);
+        arvAVL8.adicionarNo(12);
+        arvAVL8.adicionarNo(22);
+        arvAVL8.adicionarNo(11);
+        System.out.println(arvAVL8.consultarExistenciaNo(29));
+        System.out.println(arvAVL8.consultarExistenciaNo(22));
+        System.out.println("\nAVL RDE:" + arvAVL8.navegarPelaArvore());
+
+        arvAVL8.removerNo(20);
+        System.out.println("\nAVL RDE:" + arvAVL8.navegarPelaArvore());
     }
 
 }

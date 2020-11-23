@@ -1,24 +1,26 @@
-package Arvores;
+package Arvores.ArvoreAVL;
 
 /**
  *
  * @author ErikDCAlmeida
  */
-public class No<T> {
+public class NoAVL<T> {
     
     private T elemento;
-    private No<T> filhoEsquerdo;
-    private No<T> filhoDireito;
-    private No<T> pai;
+    private NoAVL<T> filhoEsquerdo;
+    private NoAVL<T> filhoDireito;
+    private NoAVL<T> pai;
+    private int balancoNo;
     
-    public No(T elemento, No<T> pai) {
+    public NoAVL(T elemento, NoAVL<T> pai) {
         this.elemento = elemento;
         this.pai = pai;
         this.filhoDireito = null;
         this.filhoEsquerdo = null;
+        this.balancoNo = 0;
     }
 
-    public No(T elemento) {
+    public NoAVL(T elemento) {
         this(elemento, null);
     }
     
@@ -49,29 +51,37 @@ public class No<T> {
         return elemento;
     }
 
-    public No<T> getFilhoEsquerdo() {
+    public NoAVL<T> getFilhoEsquerdo() {
         return filhoEsquerdo;
     }
 
-    public void setFilhoEsquerdo(No<T> filhoEsquerdo) {
+    public void setFilhoEsquerdo(NoAVL<T> filhoEsquerdo) {
         this.filhoEsquerdo = filhoEsquerdo;
     }
 
-    public No<T> getFilhoDireito() {
+    public NoAVL<T> getFilhoDireito() {
         return filhoDireito;
     }
 
-    public void setFilhoDireito(No<T> filhoDireito) {
+    public void setFilhoDireito(NoAVL<T> filhoDireito) {
         this.filhoDireito = filhoDireito;
     }
 
-    public No<T> getPai() {
+    public NoAVL<T> getPai() {
         return pai;
     }
 
-    public void setPai(No<T> pai) {
+    public void setPai(NoAVL<T> pai) {
         this.pai = pai;
-    }    
+    }
+
+    public int getBalancoNo() {
+        return balancoNo;
+    }
+
+    public void setBalancoNo(int balancoNo) {
+        this.balancoNo = balancoNo;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -81,8 +91,9 @@ public class No<T> {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
+        
         @SuppressWarnings ("unchecked")
-        No<T> other = (No<T>) obj;
+        NoAVL<T> other = (NoAVL<T>) obj;
         
         return this.elemento == other.elemento;
     }
@@ -98,7 +109,8 @@ public class No<T> {
             string.append("\nFilho direito: ").append(this.filhoDireito);
         }
         string.append("\n");
+        string.append("Balanço: ").append(this.balancoNo);
         return string.toString();
     } 
-    
+
 }
