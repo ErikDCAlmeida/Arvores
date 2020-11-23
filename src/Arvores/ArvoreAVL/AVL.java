@@ -407,6 +407,7 @@ public class AVL<T extends Comparable<T>> implements IArvoreAVL<T> {
                             noAux.setPai(null);
                             this.reAddBalancoNo(this.raizDaArvore);
                             this.contemBalancoIrregular(noFilhoAux.getElemento());
+                            this.reAddBalancoNo(this.raizDaArvore);
                         } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
                             noFilhoAux = noAux.getFilhoEsquerdo();
                             noPaiAux.setFilhoDireito(noFilhoAux);
@@ -415,6 +416,7 @@ public class AVL<T extends Comparable<T>> implements IArvoreAVL<T> {
                             noAux.setPai(null);
                             this.reAddBalancoNo(this.raizDaArvore);
                             this.contemBalancoIrregular(noFilhoAux.getElemento());
+                            this.reAddBalancoNo(this.raizDaArvore);
                         }
                     } else if (noAux.equals(noPaiAux.getFilhoEsquerdo())) {
                         if (noAux.possuiFilhoDireito() == true && noAux.possuiFilhoEsquerdo() == false) {
@@ -425,6 +427,7 @@ public class AVL<T extends Comparable<T>> implements IArvoreAVL<T> {
                             noAux.setPai(null);
                             this.reAddBalancoNo(this.raizDaArvore);
                             this.contemBalancoIrregular(noFilhoAux.getElemento());
+                            this.reAddBalancoNo(this.raizDaArvore);
                         } else if (noAux.possuiFilhoEsquerdo() == true && noAux.possuiFilhoDireito() == false) {
                             noFilhoAux = noAux.getFilhoEsquerdo();
                             noPaiAux.setFilhoEsquerdo(noFilhoAux);
@@ -433,6 +436,7 @@ public class AVL<T extends Comparable<T>> implements IArvoreAVL<T> {
                             noAux.setPai(null);
                             this.reAddBalancoNo(this.raizDaArvore);
                             this.contemBalancoIrregular(noFilhoAux.getElemento());
+                            this.reAddBalancoNo(this.raizDaArvore);
                         }
                     }
                 /*Else if para que se o n� tenha 2 filhos.*/

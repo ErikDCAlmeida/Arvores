@@ -49,13 +49,14 @@ public class MenuAVL {
             } else if (escolha == 0) {
                 break;
             } else {
-                System.out.print("Desculpe, não foi possível encontrar a opção desejada!\n"
-                                + "Por favor, digite uma opção válida!\n"
-                                + "1 - Inserir um nó.\n" + "2 - Consultar existência de um nó.\n" 
-                                + "3 - Excluir um nó.\n" + "4 - Imprimir a árvore.\n"
-                                + "0 - Fechar programa.\n" + "Escolha: ");
-                escolha = scan.nextInt();
+                System.out.println("Desculpe, não foi possível encontrar a opção desejada!\n"
+                                + "Por favor, digite uma opção válida!");
             }
+            System.out.print("\nO que deseja fazer agora?\n"
+            + "1 - Inserir um nó.\n" + "2 - Consultar existência de um nó.\n" 
+            + "3 - Excluir um nó.\n" + "4 - Imprimir a árvore.\n"
+            + "0 - Fechar programa.\n" + "Escolha: ");
+            escolha = scan.nextInt();
         }
         scan.close();
     }
